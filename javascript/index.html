@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Depth First Search (DFS) algorithm implementation in JavaScript</title>
+		<script>
+			function output(arg) {
+				console.log(arg);
+				displayOutput.innerText += arg + ' ';
+			}
+			function dfs(graph, node) {
+				output(node.label);
+				node.visited = true;
+				neighbours(graph, node).forEach(neighbour => {
+					if (!neighbour.visited) {
+						dfs(graph, neighbour);
+					}
+				});
+			}
+			function neighbours(graph, node) {
+				const left = graph.filter(candidate => equals(node.left, candidate.label))
+				const right = graph.filter(candidate => equals(node.right, candidate.label))
+				return [...left, ...right];
+			}
+			function equals(value1, value2) {
+				if (value1 === undefined || value2 == undefined) {
+					return false;
+				}
+				return value1 === value2;
+			}
+		</script>
+		<script>
+			let displayInputGraph;
+			let displayOutput;
+			function initGlobals() {
+				displayInputGraph = document.getElementById('display-input-graph');
+				displayOutput = document.getElementById('display-output');
+			}
+			function init() {
+				initGlobals();
+				start();
+			}
+			function start() {
+				const input = '{"label": "A", "left": "B", "right": "D"}, {"label": "B", "left": "C", "right": "E"}, {"label": "C", "left": "F"}, {"label": "D"}, {"label": "E"}, {"label": "F"}';
+				// const input = '{"label": "x", "left": "y", "right": "z"}, {"label": "z"}, {"label": "y"}';
+				const graph = JSON.parse('[' + input + ']');
+				displayInputGraph.innerText = JSON.stringify(graph);
+				const root = graph[0];
+				dfs(graph, root);
+				displayOutput.innerText = displayOutput.innerText.trim();
+			}
+			window.addEventListener('load', init);
+		</script>
+	</head>
+	<body>
+		<fieldset>
+			<legend>Input Graph</legend>
+			<pre id="display-input-graph"></pre>
+		</fieldset>
+		<br>
+		<fieldset>
+			<legend>Output</legend>
+			<pre id="display-output"></pre>
+		</fieldset>
+	</body>
+</html>
