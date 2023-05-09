@@ -20,4 +20,4 @@ But it's easier (and funnier!) to use `browser-sync` to auto refresh the changes
     ./javascript/.bash install     # run this ONLY ONCE to install
     ./javascript/.bash start       # run this to launch the application
 
-Running example: https://crisstanza.github.io/Depth-First-Search/
+Running example: https://crisstanza.github.io/Depth-First-Search/javascript/
