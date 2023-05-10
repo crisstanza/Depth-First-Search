@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import io.github.crisstanza.dfs.DFS;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,9 +33,15 @@ public final class DFSTest {
     }
 
     @Test
-    public void testException() throws JsonProcessingException {
+    public void testExceptionEmptyGraph() throws JsonProcessingException {
         final String graph = "[]";
         final DFS solver = new DFS(graph);
         assertThrows(ArrayIndexOutOfBoundsException.class, solver::start);
+    }
+
+    @Test
+    public void testExceptionInvalidInput() {
+        final String graph = "[ invalid json ]";
+        assertThrows(JsonMappingException.class, () -> new DFS(graph));
     }
 }
